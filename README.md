@@ -55,9 +55,9 @@ By keeping
 
 auth-token in header with the key in value
 
-you will be authenticated & authorized.
+### you will be authenticated & authorized.
 
-## you can hit GET  http://localhost:9000/api/dummy
+## GET  http://localhost:9000/api/dummy
 
 you will be authenticated but not authorized.
 
