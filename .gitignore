@@ -1,0 +1,14 @@
+.DS_Store
+.idea/
+*.iml
+.settings
+out/
+src/META-INF/
+libs/
+lib/
+output/
+/bin/
+.classpath
+.project
+target/
+temp/
