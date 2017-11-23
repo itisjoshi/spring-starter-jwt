@@ -37,19 +37,19 @@ authModel:
 }
 ```
 
-GET  http://localhost:9000/api/
+## GET  http://localhost:9000/api/
 
 you will not be authenticated.
 
 Login using
 
-POST http://localhost:9000/api/auth/login
+## POST http://localhost:9000/api/auth/login
 
 to get the auth token in response header
 
 Then, use 
 
-GET  http://localhost:9000/api/
+## GET  http://localhost:9000/api/
 
 By keeping 
 
@@ -57,6 +57,11 @@ auth-token in header with the key in value
 
 you will be authenticated & authorized.
 
-you can hit GET  http://localhost:9000/api/dummy
+## you can hit GET  http://localhost:9000/api/dummy
 
 you will be authenticated but not authorized.
+
+# Contributors
+
+1. [Prathap Manohar Joshi](https://www.linkedin.com/in/pmjoshi) : https://github.com/itisjoshi
+
