@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Prathap Manohar Joshi
@@ -55,9 +58,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
-    		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper();
+		BeanUserDetails beanUserDetails = (BeanUserDetails) auth.getPrincipal();
+
+		List<String> roles = new ArrayList<>();
+		@SuppressWarnings("unchecked")
+		List<SimpleGrantedAuthority> simpleGrantedAuthorities = (List<SimpleGrantedAuthority>) beanUserDetails.getAuthorities();
+		for(SimpleGrantedAuthority simpleGrantedAuthority : simpleGrantedAuthorities) {
+			roles.add(simpleGrantedAuthority.getAuthority());
+		}
+		beanUserDetails.setAuthorities(null);
+		beanUserDetails.setRoles(roles);
+    		String subject = mapper.writeValueAsString(beanUserDetails);
         String token = Jwts.builder()
-                .setSubject(mapper.writeValueAsString((BeanUserDetails) auth.getPrincipal()))
+                .setSubject(subject)
                 .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET.getBytes())
                 .compact();

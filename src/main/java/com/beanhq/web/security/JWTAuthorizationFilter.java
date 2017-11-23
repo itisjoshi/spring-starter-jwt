@@ -3,6 +3,7 @@ package com.beanhq.web.security;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Prathap Manohar Joshi
@@ -53,12 +55,16 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject();
-            System.out.println("BEFORE");
-
             BeanUserDetails beanUserDetails = objectMapper.readValue(jsonString, BeanUserDetails.class);
-            System.out.println("sdfluhdbsopiufb");
+	    		List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();            
+            for(String role: beanUserDetails.getRoles()) {
+            		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);            	
+            		updatedAuthorities.add(authority);
+            }
+		    
+            beanUserDetails.setAuthorities(updatedAuthorities);
             if (beanUserDetails != null) {
-                return new UsernamePasswordAuthenticationToken(beanUserDetails, null, null);
+                return new UsernamePasswordAuthenticationToken(beanUserDetails, null, updatedAuthorities);
             }
             return null;
         }

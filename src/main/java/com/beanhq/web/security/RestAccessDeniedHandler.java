@@ -1,0 +1,27 @@
+package com.beanhq.web.security;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
+
+/**
+ * Created by Prathap Manohar Joshi
+ */
+public class RestAccessDeniedHandler implements AccessDeniedHandler {
+
+	@Override
+	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exc)
+        throws IOException, ServletException {
+
+        if (!response.isCommitted()) {
+
+    		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
+        }
+    }   
+
+}

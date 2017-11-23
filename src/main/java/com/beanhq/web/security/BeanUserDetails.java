@@ -24,18 +24,32 @@ public class BeanUserDetails implements UserDetails {
 
 	private String username;
 	private String password;
+
 	private Long userId;
 	private Boolean accountNonExpired;
 	private Boolean accountNonLocked;
 	private Boolean credentialsNonLocked;
 	private Boolean enabled;
 	private List<SimpleGrantedAuthority> authorities;
+	private List<String> roles;
+
+	public List<String> getRoles() {
+		return roles;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
 	private Long orgId;
 	
 	public BeanUserDetails() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public BeanUserDetails(String username, String password,
 			Boolean accountNonExpired, Boolean accountNonLocked,
 			Boolean credentialsNonLocked, Boolean enabled,
@@ -72,6 +86,11 @@ public class BeanUserDetails implements UserDetails {
 
 	public void setOrgId(Long orgId) {
 		this.orgId = orgId;
+	}
+
+	public void setAuthorities(List<SimpleGrantedAuthority> authorities) {
+		// TODO Auto-generated method stub
+		this.authorities = authorities;
 	}
 
 	@Override
