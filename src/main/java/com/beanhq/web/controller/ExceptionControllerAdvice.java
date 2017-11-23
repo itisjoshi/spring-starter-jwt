@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -46,6 +47,18 @@ public class ExceptionControllerAdvice {
     public ErrorResponse handleResourceNotFoundException (ResourceNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorCode(ErrorCode.RESOURCE_NOT_FOUND);
+        errorResponse.setErrorMessage(Constants.RESOURCE_NOT_FOUND_ERROR_MESSAGE);
+        exception.printStackTrace();
+        errorResponse.setDevErrorMessage(exception.getMessage());
+        return errorResponse;
+    }
+	
+	@ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ErrorResponse accessDeniedException (AccessDeniedException exception) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setErrorCode(ErrorCode.ACCESS_DENEID);
         errorResponse.setErrorMessage(Constants.RESOURCE_NOT_FOUND_ERROR_MESSAGE);
         exception.printStackTrace();
         errorResponse.setDevErrorMessage(exception.getMessage());

@@ -18,5 +18,7 @@ public class Constants {
 	public static final String RESOURCE_NOT_FOUND_ERROR_MESSAGE = "Resource not found.";  
 	
 	public static final String SERVICE_UNAVAILABLE_ERROR_MESSAGE = "Service Unavailable. Unknown exception occurred."; 
-	
+
+	public static final String ACCESS_DENIED_ERROR_MESSAGE = "Access Denied, Not a authorized user."; 
+
 }
