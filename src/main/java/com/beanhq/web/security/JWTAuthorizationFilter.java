@@ -1,6 +1,8 @@
 package com.beanhq.web.security;
 
 import io.jsonwebtoken.Jwts;
+
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,7 +44,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(req, res);
+        chain.doFilter(req, res);        	
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {

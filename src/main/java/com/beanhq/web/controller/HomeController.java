@@ -27,7 +27,7 @@ public class HomeController {
 		return object;
 	}
 
-	@RequestMapping(value = "/s", method = RequestMethod.GET)
+	@RequestMapping(value = "/dummy", method = RequestMethod.GET)
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public Map<String, String> wdw(Locale locale) {
 		System.out.println("Server Started, Home Called Succcessfully");
